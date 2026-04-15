@@ -23,7 +23,7 @@ def test_send_message_from_brain_to_llm():
         "date": "2024-06-01",
         "hour": "10:00",
         "user": "Alice",
-        "user_msg": "Diz-me os passos para ir ao laboratio A ?",
+        "user_msg": "where is the lab of Alice?",
         "intention": None,
         "orlock_response": None
     })

@@ -1,0 +1,324 @@
+ORLOCK PROJECT WORKFLOW
+======================
+
+This document explains how data flows through the ORLOCK project from start to finish.
+
+═══════════════════════════════════════════════════════════════════════════════
+
+WORKFLOW 1: SIMPLE MESSAGE TO LLM
+═════════════════════════════════
+
+User API Request:
+POST /api/v1/messageToLLM
+
+                ↓
+
+        messagetollm.py (ENDPOINT)
+        ├─ Receives request with:
+        │  ├─ prompt (text)
+        │  ├─ system (optional)
+        │  └─ history (optional chat history)
+        │
+        ├─ Validates with schema: MessageToLLMRequest (llm.py)
+        │
+        └─→ Creates LLMService()
+
+                ↓
+
+        llm_service.py (SERVICE LAYER)
+        ├─ Receives: MessageToLLMRequest
+        ├─ Decision:
+        │  ├─ If history exists → use chat mode
+        │  └─ If no history → use generate mode
+        │
+        └─→ Calls LocalLLMClient
+
+                ↓
+
+        llm_client.py (PROVIDER)
+        ├─ Method: chat() or generate()
+        ├─ Makes HTTP request to localhost:11434/api/chat
+        ├─ If fails, fallback to /api/generate
+        │
+        └─→ Gets response from OLLAMA (external LLM)
+
+                ↓
+
+        Response returns back up the chain:
+        llm_client → llm_service → messagetollm.py
+
+                ↓
+
+        messagetollm.py wraps in MessageToLLMResponse
+
+                ↓
+
+        Returns to user (JSON):
+        { "response": "AI generated text here" }
+
+
+═══════════════════════════════════════════════════════════════════════════════
+
+WORKFLOW 2: USER MESSAGE WITH LLM
+══════════════════════════════════
+
+User API Request:
+POST /api/v1/userMessage
+
+                ↓
+
+        user_message.py (ENDPOINT)
+        ├─ Receives request with:
+        │  ├─ user_id
+        │  ├─ text (user message)
+        │  ├─ system (optional)
+        │  └─ temperature (optional)
+        │
+        ├─ Validates with schema: UserMessageIn (user_message.py)
+        │
+        ├─ Converts to: MessageToLLMRequest
+        │
+        └─→ Calls LLMService.message_to_llm()
+
+                ↓
+
+        llm_service.py (SERVICE LAYER)
+        ├─ Takes MessageToLLMRequest
+        ├─ Prepares payload with prompt + optional history
+        │
+        └─→ Calls LocalLLMClient.generate() or chat()
+
+                ↓
+
+        llm_client.py (PROVIDER)
+        ├─ Makes HTTP request to Ollama
+        │
+        └─→ Gets LLM response
+
+                ↓
+
+        Returns back to user_message.py
+
+                ↓
+
+        Wraps response in: UserMessageOut
+        ├─ user_id
+        ├─ user_text (original text)
+        └─ llm_response (LLM's reply)
+
+                ↓
+
+        Returns to user (JSON):
+        {
+          "user_id": "alice",
+          "user_text": "Hello",
+          "llm_response": "Hi Alice! How can I help?"
+        }
+
+
+═══════════════════════════════════════════════════════════════════════════════
+
+WORKFLOW 3: AUDIO MESSAGE
+════════════════════════
+
+User API Request:
+POST /api/v1/userAudio (with audio file)
+
+                ↓
+
+        user_audio.py (ENDPOINT)
+        ├─ Receives:
+        │  ├─ user_id
+        │  ├─ audio (binary file)
+        │  ├─ system (optional)
+        │  └─ temperature
+        │
+        ├─ Step 1: Creates temp folder
+        │
+        ├─ Step 2: Saves audio file to disk (tempaudio folder)
+        │
+        ├─ Step 3: Transcribes audio (PLACEHOLDER - use Whisper/STT)
+        │          Result: transcript_text
+        │
+        ├─ Creates: MessageToLLMRequest with transcript_text
+        │
+        └─→ Calls LLMService.message_to_llm()
+
+                ↓
+
+        Same as WORKFLOW 2 from here...
+        llm_service → llm_client → Ollama
+
+                ↓
+
+        Returns UserMessageOut with LLM response
+
+
+═══════════════════════════════════════════════════════════════════════════════
+
+WORKFLOW 4: INTENT CLASSIFICATION (BRAIN)
+═══════════════════════════════════════════
+
+This is used by the test: test_process_msg_in_brain.py
+
+Step 1: Create Message Object
+        ↓
+        messages_in_brain.py (MsgInBrain class)
+        ├─ Stores:
+        │  ├─ msg_id (date_hour_user)
+        │  ├─ date
+        │  ├─ hour
+        │  ├─ user
+        │  ├─ user_msg (the text)
+        │  ├─ intention (null initially)
+        │  └─ orlock_response (null initially)
+
+Step 2: Process Message
+        ↓
+        process_msg_in_brain.py (ProcessMsgInBrain class)
+        ├─ Loads system prompt from: src/orlock/brain/prompts/user_intention.txt
+        ├─ Takes the user_msg from MsgInBrain
+        ├─ Creates messages array:
+        │  ├─ System message (classification rules)
+        │  └─ User message (the text to classify)
+        │
+        └─→ Calls LocalLLMClient.chat()
+
+Step 3: LLM Classifies Intent
+        ↓
+        llm_client.py
+        ├─ Sends to Ollama with classification prompt
+        ├─ Ollama responds with one of:
+        │  ├─ Greeting
+        │  ├─ WhereIs
+        │  ├─ PathTo
+        │  ├─ Wait
+        │  └─ EscortUser
+
+Step 4: Normalize & Store
+        ↓
+        process_msg_in_brain.py
+        ├─ Normalizes response (handles typos, case variations)
+        ├─ Stores in message: msg["orlock_response"] = intent_label
+        │
+        └─→ Returns the classified intention
+
+Step 5: Message Updated
+        ↓
+        messages_in_brain.py
+        ├─ Now contains:
+        │  ├─ Original text
+        │  └─ Classified intent (Greeting, WhereIs, etc.)
+
+        This is used by the robot to decide what action to take!
+
+
+═══════════════════════════════════════════════════════════════════════════════
+
+DATA FLOW SUMMARY
+═════════════════
+
+Browser/Client Request
+         ↓
+    FastAPI (main.py)
+         ↓
+    API Router (router.py)
+         ↓
+    Endpoint (messagetollm.py / user_message.py / user_audio.py)
+         ↓
+    Schemas (llm.py / user_message.py) - Validates input
+         ↓
+    Service (llm_service.py) - Business logic
+         ↓
+    Provider (llm_client.py) - HTTP communication
+         ↓
+    Ollama (External LLM on localhost:11434)
+         ↓
+    Response returns back up
+         ↓
+    Browser/Client gets JSON response
+
+
+═══════════════════════════════════════════════════════════════════════════════
+
+FILE CONNECTIONS AT A GLANCE
+═════════════════════════════
+
+main.py
+  └─→ imports: router.py
+
+router.py
+  └─→ imports: messagetollm.py, user_message.py, user_audio.py
+
+messagetollm.py
+  └─→ imports: llm.py (schemas), llm_service.py
+
+user_message.py
+  └─→ imports: user_message.py (schemas), llm.py (schemas), llm_service.py
+
+user_audio.py
+  └─→ imports: user_message.py (schemas), llm.py (schemas), llm_service.py
+
+llm_service.py
+  └─→ imports: llm_client.py, llm.py (schemas)
+
+llm_client.py
+  └─→ Makes HTTP requests to Ollama
+
+process_msg_in_brain.py
+  └─→ imports: llm_client.py, user_intention.txt (prompt file)
+
+messages_in_brain.py
+  └─→ Simple data container (no imports)
+
+test_process_msg_in_brain.py (TEST FILE)
+  └─→ imports: process_msg_in_brain.py, llm_client.py
+
+
+═══════════════════════════════════════════════════════════════════════════════
+
+KEY FILES ROLES
+═════════════════
+
+1. main.py
+   - Entry point: Creates FastAPI app
+   - No business logic
+
+2. api/v1/router.py
+   - Combines all endpoints
+   - Routes requests to correct handler
+
+3. api/v1/endpoints/*.py (3 endpoints)
+   - Entry points for HTTP requests
+   - Validate input with schemas
+   - Call services
+
+4. schemas/*.py
+   - Pydantic models for validation
+   - Define request/response structure
+   - Automatic type checking
+
+5. services/llm_service.py
+   - Business logic layer
+   - Decides how to use the LLM
+   - Prepares data for provider
+
+6. providers/llm_client.py
+   - Talks to Ollama
+   - Makes HTTP requests
+   - Returns LLM responses
+
+7. brain/process_msg_in_brain.py
+   - AI intent classification
+   - Uses LLM to understand user intention
+   - Returns one of 5 intent types
+
+8. brain/messages_in_brain.py
+   - Message data container
+   - Stores all message metadata
+
+9. tests/*.py
+   - Test files to verify functionality
+   - Can be run manually to test
+
+═══════════════════════════════════════════════════════════════════════════════
