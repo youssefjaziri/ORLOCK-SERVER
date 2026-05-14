@@ -1,10 +1,17 @@
+import os
+
 class ProcessMsgInBrain:
     VALID_LABELS = {"Greeting", "WhereIs", "PathTo", "Wait", "EscortUser"}
 
-    def __init__(self, msg_in_brain, llm_client, prompt_file="src\\orlock\\brain\\prompts\\user_intention.txt"):
+    def __init__(self, msg_in_brain, llm_client, path=None):
         self.msg_in_brain = msg_in_brain
         self.llm_client = llm_client
-        self.intent_prompt = self._load_prompt(prompt_file)
+
+        if path is None:
+            base_dir = os.path.dirname(__file__)
+            path = os.path.join(base_dir, "prompts", "user_intention.txt")
+
+        self.intent_prompt = self._load_prompt(path)
 
     def _load_prompt(self, prompt_file):
         try:
