@@ -1,0 +1,9 @@
+{
+  "user_id": "test_user",
+  "timestamp": "2026-04-21T13:40:33.817629",
+  "audio_path": "tempaudio/test_user_8301a72e1c8143108bbdc2b541cd4e73.wav",
+  "transcript_text": "The person is going back to his house.",
+  "llm_response": " That's great! If you need help planning a route or have any specific questions about the journey, feel free to ask. Enjoy your trip home!",
+  "intent": null,
+  "temperature": 0.2
+}

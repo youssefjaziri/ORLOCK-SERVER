@@ -1,0 +1,9 @@
+{
+  "user_id": "user_gyimtkfab",
+  "timestamp": "2026-05-02T16:08:35.584997",
+  "audio_path": "tempaudio/user_gyimtkfab_785717c6666f43c18a10817a000f4cec.wav",
+  "transcript_text": "Test, test, test.",
+  "llm_response": " Hello! It seems like you're testing the functionality of this chat model. Everything appears to be working fine. If you have any questions or need assistance with something, feel free to ask!\n\nHere are a few examples of what I can help with:\n\n1. Answering general knowledge questions (e.g., \"What is the capital of France?\")\n2. Helping with math problems (e.g., \"Solve for x in 3x + 5 = 14\")\n3. Providing explanations on various topics (e.g., \"Explain photosynthesis\")\n4. Generating creative writing prompts or stories (e.g., \"Write a short story about a robot learning to dance\")\n5. Offering suggestions for books, movies, or TV shows based on your preferences (e.g., \"What are some good science fiction novels?\")\n6. Providing fun facts and trivia (e.g., \"Tell me an interesting fact about space travel.\")\n7. Helping with language translations (e.g., \"Translate 'Hello' into Spanish\")\n8. Assisting with coding questions or concepts (e.g., \"Explain the difference between a loop and recursion in programming.\")\n9. Offering advice on productivity, time management, and organization strategies (e.g., \"What are some effective study habits for students?\")\n10. Providing tips for learning new skills, such as playing an instrument or painting (e.g., \"How can I improve my guitar-playing skills?\")",
+  "intent": null,
+  "temperature": 0.2
+}

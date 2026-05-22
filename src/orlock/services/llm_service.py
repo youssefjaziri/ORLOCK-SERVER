@@ -17,3 +17,7 @@ class LLMService:
             return self.client.chat(messages, temperature=payload.temperature)
 
         return self.client.generate(payload.prompt, system=payload.system, temperature=payload.temperature)
+
+    def message_to_llm_text(self, prompt: str, system: str = None, temperature: float = 0.2) -> str:
+        """Simple text-to-text LLM call (used by orchestration layer)."""
+        return self.client.generate(prompt, system=system, temperature=temperature)

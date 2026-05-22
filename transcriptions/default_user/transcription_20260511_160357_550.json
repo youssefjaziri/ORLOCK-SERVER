@@ -1,0 +1,9 @@
+{
+  "user_id": "default_user",
+  "timestamp": "2026-05-11T16:03:57.550612",
+  "audio_path": "tempaudio/default_user_8b3b3efddf7045e0b741064033b585a1.wav",
+  "transcript_text": "Hello. Hello.",
+  "llm_response": " Hello! How can I assist you today?\n\nI'm here to help answer questions, provide information, and engage in friendly conversation. Whether you need help with a specific topic or just want to chat about something interesting, feel free to ask.\n\nIf you have any feedback on how I can improve my responses or if there's anything else you'd like me to know, please let me know! I'm always looking for ways to make our interactions more helpful and enjoyable.\n\nSo, what would you like to talk about today?",
+  "intent": null,
+  "temperature": 0.2
+}

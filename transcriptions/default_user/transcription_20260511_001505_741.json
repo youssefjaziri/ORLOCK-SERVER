@@ -1,0 +1,9 @@
+{
+  "user_id": "default_user",
+  "timestamp": "2026-05-11T00:15:05.741365",
+  "audio_path": "tempaudio/default_user_f02c808751cc4a1e99b11dc59fa85186.wav",
+  "transcript_text": "[TRANSCRIPTION_EMPTY] No speech detected in audio",
+  "llm_response": " It seems there's no audio to transcribe. If you have a different audio file or text that needs transcription, feel free to provide it!",
+  "intent": null,
+  "temperature": 0.2
+}

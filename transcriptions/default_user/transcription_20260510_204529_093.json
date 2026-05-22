@@ -1,0 +1,9 @@
+{
+  "user_id": "default_user",
+  "timestamp": "2026-05-10T20:45:29.093012",
+  "audio_path": "tempaudio/default_user_256fb4df97ba429a96909851da029593.wav",
+  "transcript_text": "Hello where is the lab?",
+  "llm_response": " It seems there might be a misunderstanding. I'm an AI and don't have a physical location or a lab. If you're asking about a specific lab in a real-world context, I'm unable to provide that information without more details.",
+  "intent": null,
+  "temperature": 0.2
+}

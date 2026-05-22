@@ -1,0 +1,9 @@
+{
+  "user_id": "test_user",
+  "timestamp": "2026-04-21T00:09:23.043136",
+  "audio_path": "tempaudio/test_audio.wav",
+  "transcript_text": "where is the lab?",
+  "llm_response": "The lab is located in building C on the third floor.",
+  "intent": "WhereIs",
+  "temperature": 0.2
+}

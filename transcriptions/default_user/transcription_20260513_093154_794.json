@@ -1,0 +1,9 @@
+{
+  "user_id": "default_user",
+  "timestamp": "2026-05-13T09:31:54.794845",
+  "audio_path": "tempaudio/default_user_0cac6b41bcbf43d58a98b06d38767fef.wav",
+  "transcript_text": "Hello",
+  "llm_response": " Hello! How can I help you today? If you have any questions or need assistance with something, feel free to ask. I'm here to help!\n\nIf you're just saying hello, then hello back! It's nice to meet you. Have a great day!",
+  "intent": null,
+  "temperature": 0.2
+}

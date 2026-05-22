@@ -1,0 +1,9 @@
+{
+  "user_id": "default_user",
+  "timestamp": "2026-05-13T09:42:32.690408",
+  "audio_path": "tempaudio/default_user_491c07204f9943878caf495cc8aa8c73.wav",
+  "transcript_text": "This",
+  "llm_response": " It seems like you didn't provide a specific question or topic for me to respond to. Here are a few suggestions:\n\n1. If you need help with a programming problem, feel free to ask and I can try my best to assist you.\n2. If you have any questions about a particular subject, such as science, history, or literature, I'm here to help!\n3. If you just want to chat about something interesting, I'd be happy to engage in a friendly conversation.\n4. If you need advice on a personal matter, remember that while I can provide information and suggestions based on the data I have been trained on, I am not able to replace professional advice from a mental health professional or other experts.\n\nPlease let me know what you would like to discuss!",
+  "intent": null,
+  "temperature": 0.2
+}

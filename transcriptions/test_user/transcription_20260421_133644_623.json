@@ -1,0 +1,9 @@
+{
+  "user_id": "test_user",
+  "timestamp": "2026-04-21T13:36:44.623092",
+  "audio_path": "tempaudio/test_user_f55e8914679840c091dfee4e9d380559.wav",
+  "transcript_text": "Where is the love?",
+  "llm_response": " That's a question that has been asked by many, and it's a complex one. The answer can vary greatly depending on personal beliefs, experiences, and cultural contexts. In a broad sense, love can be found in various aspects of life such as family, friendship, romantic relationships, and even self-love. It can also be seen in acts of kindness, compassion, and empathy towards others. However, it's important to remember that love isn't always easy or constant, and it requires effort, understanding, and patience. If you're referring to a specific situation or context, I'd be happy to help further if I can!",
+  "intent": null,
+  "temperature": 0.2
+}

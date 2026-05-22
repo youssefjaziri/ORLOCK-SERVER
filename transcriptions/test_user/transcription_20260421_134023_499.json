@@ -1,0 +1,9 @@
+{
+  "user_id": "test_user",
+  "timestamp": "2026-04-21T13:40:23.499594",
+  "audio_path": "tempaudio/test_user_1c0b7e6e4ee84985b04bf9585598b57a.wav",
+  "transcript_text": "Hello",
+  "llm_response": " Hello! How can I help you today? If you have any questions or need assistance with something, feel free to ask. I'm here to help!\n\nIf you're just saying hello, then hello back! It's nice to meet you. Is there anything specific you would like to talk about or learn more about today? I can provide information on a wide range of topics, from science and technology to history, literature, and more. Just let me know what you're interested in, and I'll do my best to help!",
+  "intent": null,
+  "temperature": 0.2
+}

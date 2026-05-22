@@ -1,0 +1,9 @@
+{
+  "user_id": "default_user",
+  "timestamp": "2026-05-11T16:48:31.792124",
+  "audio_path": "tempaudio/default_user_4e3ff08588be432980f8b2ae531dab2d.wav",
+  "transcript_text": "Thank you.",
+  "llm_response": " You're welcome! If you have any other questions or need further assistance, feel free to ask. I'm here to help!",
+  "intent": null,
+  "temperature": 0.2
+}

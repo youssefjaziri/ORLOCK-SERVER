@@ -1,0 +1,9 @@
+{
+  "user_id": "test_user",
+  "timestamp": "2026-04-21T00:15:49.675520",
+  "audio_path": "tempaudio/test_user_085c787d464042d489b8a8f8aa9b0455.wav",
+  "transcript_text": "Where are you?",
+  "llm_response": " I don't have a physical location. I am a program running on a computer, and I exist digitally. I don't experience the world in the same way that humans do.",
+  "intent": null,
+  "temperature": 0.2
+}

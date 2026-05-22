@@ -1,0 +1,9 @@
+{
+  "user_id": "default_user",
+  "timestamp": "2026-05-10T21:37:54.667298",
+  "audio_path": "tempaudio/default_user_880509a8676a48d1ac488c3867317371.wav",
+  "transcript_text": "Hello",
+  "llm_response": " Hello! How can I help you today? If you have any questions or need assistance with something, feel free to ask. I'm here to help!\n\nHere are a few examples of things I can do:\n\n* Answer questions about a wide range of topics, such as math problems, science facts, historical events, and more.\n* Help you learn a new skill or subject by providing explanations, examples, and resources.\n* Provide recommendations for books, movies, TV shows, music, and other forms of entertainment based on your interests.\n* Assist with planning and organizing tasks, such as scheduling appointments, making to-do lists, and setting reminders.\n* Offer support and advice on personal issues, such as relationships, mental health, and career development.\n\nIf you have any other requests or ideas for how I can help, just let me know! I'm always here to assist.",
+  "intent": null,
+  "temperature": 0.2
+}
